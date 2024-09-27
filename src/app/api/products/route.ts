@@ -4,8 +4,10 @@ import { productSchema } from "@/lib/validators/validation";
 import { writeFile } from "fs/promises";
 import path from "path";
 import fs from "node:fs";
+import { desc } from "drizzle-orm";
 
 export async function POST(request: Request) {
+  // User Access
   const data = await request.formData();
 
   let validatedata;
@@ -54,4 +56,19 @@ export async function POST(request: Request) {
     },
     { status: 201 }
   );
+}
+
+export async function GET() {
+  try {
+    const allProducts = await db
+      .select()
+      .from(products)
+      .orderBy(desc(products.id));
+    return Response.json(allProducts);
+  } catch (error) {
+    return Response.json(
+      { message: "Failed to fetch all products" },
+      { status: 500 }
+    );
+  }
 }
