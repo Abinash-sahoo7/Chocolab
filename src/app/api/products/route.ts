@@ -1,6 +1,6 @@
 import { db } from "@/lib/db/db";
 import { products } from "@/lib/db/schema";
-import { productSchema } from "@/lib/validators/validation";
+import { productSchema } from "@/lib/validators/productValidation";
 import { writeFile } from "fs/promises";
 import path from "path";
 import fs from "node:fs";

@@ -1,0 +1,1 @@
+ALTER TABLE "Warehouses" ADD CONSTRAINT "Warehouses_pincode_unique" UNIQUE("pincode");
