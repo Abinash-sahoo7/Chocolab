@@ -47,3 +47,37 @@ export const Warehouses = pgTable(
     };
   }
 );
+
+export const orders = pgTable("order", {
+  id: serial("id").primaryKey(),
+});
+
+export const DeliveryPersons = pgTable("delivery_persons", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(),
+  phone: varchar("phone", { length: 13 }).notNull(),
+  warehouseId: integer("warehouse_id").references(() => Warehouses.id, {
+    onDelete: "cascade",
+  }),
+  orderId: integer("order_id").references(() => orders.id, {
+    onDelete: "set null",
+  }),
+  updated_at: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
+  created_at: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const Inventories = pgTable("inventories", {
+  id: serial("id").primaryKey(),
+  sku: varchar("sku", { length: 8 }).unique().notNull(),
+  orderId: integer("order_id").references(() => orders.id, {
+    onDelete: "set null",
+  }),
+  warehouseId: integer("warehouse_id")
+    .references(() => Warehouses.id, { onDelete: "cascade" })
+    .notNull(),
+  productId: integer("product_id").references(() => products.id, {
+    onDelete: "cascade",
+  }),
+  updated_at: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
+  created_at: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+});

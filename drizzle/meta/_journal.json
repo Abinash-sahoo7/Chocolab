@@ -36,6 +36,20 @@
       "when": 1727495994168,
       "tag": "0004_skinny_cobalt_man",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1727508648980,
+      "tag": "0005_curvy_absorbing_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1727545233699,
+      "tag": "0006_glorious_talon",
+      "breakpoints": true
     }
   ]
 }
