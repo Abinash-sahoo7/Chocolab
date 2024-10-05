@@ -16,12 +16,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import SideBar, { navitems } from "./_components/Sidebar"
-import AdminPage from "./page"
 
 export const description =
     "A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action."
 
-const DashboardLayout = () => {
+const DashboardLayout = ({ children, }: { children: React.ReactNode }) => {
     return (
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
             <SideBar />
@@ -76,7 +75,7 @@ const DashboardLayout = () => {
                     </DropdownMenu>
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-                    <AdminPage />
+                    {children}
                 </main>
             </div>
         </div>
