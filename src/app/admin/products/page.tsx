@@ -8,10 +8,9 @@ import { columns } from './columns'
 import { useQuery } from '@tanstack/react-query';
 import { getAllProducts } from '@/http/api';
 import { Product } from '@/types';
+import ProductSheet from './Product-sheet';
 
 const Productpage = () => {
-
-  console.log("backend URL : ", process.env.NEXT_PUBLIC_API_BASE_URL);
 
   const { data: products } = useQuery<Product[]>({
     queryKey: ['products'],
@@ -27,6 +26,8 @@ const Productpage = () => {
       </div>
 
       <DataTable columns={columns} data={products || []} />
+
+      <ProductSheet />
     </>
   )
 }
