@@ -9,10 +9,11 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import { Loader2 } from 'lucide-react'
 
 export type Formvalues = z.input<typeof productSchema>;
 
-const CreateProductForm = ({ onSubmit }: { onSubmit: (formValues: Formvalues) => void }) => {
+const CreateProductForm = ({ onSubmit, disabled }: { onSubmit: (formValues: Formvalues) => void, disabled: boolean }) => {
 
     const form = useForm<z.infer<typeof productSchema>>({
         resolver: zodResolver(productSchema),
@@ -89,7 +90,9 @@ const CreateProductForm = ({ onSubmit }: { onSubmit: (formValues: Formvalues) =>
                         </FormItem>
                     )}
                 />
-                <Button className='w-full'>Create</Button>
+                <Button className='w-full' disabled={disabled}>
+                    {disabled ? <Loader2 className='size-4 animate-spin' /> : 'Create'}
+                </Button>
             </form>
         </Form>
     )
