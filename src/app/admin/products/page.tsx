@@ -10,11 +10,13 @@ import { getAllProducts } from '@/http/api';
 import { Product } from '@/types';
 import ProductSheet from './Product-sheet';
 import { useNewProductState } from '@/store/product/product-store';
+import { Loader2 } from 'lucide-react';
+
 
 const Productpage = () => {
 
   const { onOpen } = useNewProductState();
-  const { data: products } = useQuery<Product[]>({
+  const { data: products, isLoading, isError, error } = useQuery<Product[]>({
     queryKey: ['products'],
     queryFn: getAllProducts,
   })
@@ -27,7 +29,18 @@ const Productpage = () => {
         <Button size={'sm'} onClick={onOpen} >Add product</Button>
       </div>
 
-      <DataTable columns={columns} data={products || []} />
+      {
+        isError && (<div className='font-bold'>
+          <h3 className='text-red-500'>Something Went Wrong!</h3>
+        </div>)
+      }
+
+      {
+        isLoading ? (<div className='flex items-center justify-center'>
+          <Loader2 className='size-10 animate-spin' />
+        </div>) :
+          (<DataTable columns={columns} data={products || []} />)
+      }
 
       <ProductSheet />
     </>
