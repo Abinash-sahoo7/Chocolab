@@ -1,4 +1,4 @@
-import { DeliveryPersonFormvalues } from "@/app/admin/delivery_persons/create-deliveryPerson-form";
+import { DeliveryPersonFormvalues } from "@/app/admin/delivery_persons/_components/create-deliveryPerson-form";
 import { api } from "./client";
 
 export const getAllProducts = async () => {

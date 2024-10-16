@@ -4,13 +4,13 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { DataTable } from '../_components/DataTable'
-import { columns } from './columns'
+import { columns } from './_components/columns'
 import { useQuery } from '@tanstack/react-query';
 import { getAllDeliveryPersons, getAllWarehouses } from '@/http/api';
 import { DeliveryPerson } from '@/types';
 import { Loader2 } from 'lucide-react';
 import { useNewWarehouseState } from '@/store/warehouse/warehouse-store';
-import DeliveryPersonSheet from './deliveryPerson-sheet';
+import DeliveryPersonSheet from './_components/deliveryPerson-sheet';
 
 
 const DeliveryPersonPage = () => {
