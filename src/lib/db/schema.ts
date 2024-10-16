@@ -43,7 +43,7 @@ export const Warehouses = pgTable(
   },
   (Table) => {
     return {
-      pincodeIdx: index("pincode_idx").on(Table.id),
+      pincodeIdx: index("pincode_idx").on(Table.pincode),
     };
   }
 );

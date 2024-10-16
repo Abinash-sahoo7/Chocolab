@@ -46,7 +46,7 @@ export async function GET() {
         created_at: DeliveryPersons.created_at,
       })
       .from(DeliveryPersons)
-      .leftJoin(Warehouses, eq(DeliveryPersons.id, Warehouses.id))
+      .leftJoin(Warehouses, eq(DeliveryPersons.warehouseId, Warehouses.id))
       .orderBy(desc(DeliveryPersons.id));
     return Response.json(alldeliveyperson);
   } catch (error) {

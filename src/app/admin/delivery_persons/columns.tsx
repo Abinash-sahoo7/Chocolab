@@ -1,18 +1,22 @@
 
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Warehouse } from "@/types"
+import { DeliveryPerson } from "@/types"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 
-export const columns: ColumnDef<Warehouse>[] = [
+export const columns: ColumnDef<DeliveryPerson>[] = [
     {
         accessorKey: "name",
         header: "Name",
     },
     {
-        accessorKey: "pincode",
+        accessorKey: "phone",
         header: "Pincode",
+    },
+    {
+        accessorKey: "warehouseName",
+        header: "warehouseName",
     },
     {
         header: "Actions",

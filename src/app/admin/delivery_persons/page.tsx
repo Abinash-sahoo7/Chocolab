@@ -6,27 +6,28 @@ import React from 'react'
 import { DataTable } from './DataTable'
 import { columns } from './columns'
 import { useQuery } from '@tanstack/react-query';
-import { getAllWarehouses } from '@/http/api';
-import { Warehouse } from '@/types';
+import { getAllDeliveryPersons, getAllWarehouses } from '@/http/api';
+import { DeliveryPerson } from '@/types';
 import { Loader2 } from 'lucide-react';
-import WareHouseSheet from './Warehouse-sheet';
 import { useNewWarehouseState } from '@/store/warehouse/warehouse-store';
+import DeliveryPersonSheet from './deliveryPerson-sheet';
 
 
-const WareHousePage = () => {
+const DeliveryPersonPage = () => {
 
   const { onOpen } = useNewWarehouseState();
-  const { data: warehouses, isLoading, isError, error } = useQuery<Warehouse[]>({
-    queryKey: ['warehouses'],
-    queryFn: getAllWarehouses,
+  const { data: deliveryPersons, isLoading, isError, error } = useQuery<DeliveryPerson[]>({
+    queryKey: ['deliverypersons'],
+    queryFn: getAllDeliveryPersons,
   })
-  console.log("warehouses : ", warehouses);
+  console.log("deliveryPersons : ", deliveryPersons);
+
 
   return (
     <>
       <div className='flex align-middle justify-between'>
-        <h3 className='text-2xl font-bold tracking-tight'>Warehouses</h3>
-        <Button size={'sm'} onClick={onOpen} >Add Warehouse</Button>
+        <h3 className='text-2xl font-bold tracking-tight'>Delivery Persons</h3>
+        <Button size={'sm'} onClick={onOpen}  >Add DeliveryPerson</Button>
       </div>
 
       {
@@ -38,13 +39,13 @@ const WareHousePage = () => {
       {
         isLoading ? (<div className='flex items-center justify-center'>
           <Loader2 className='size-10 animate-spin' />
-        </div>) : (<DataTable columns={columns} data={warehouses || []} />)
+        </div>) : (<DataTable columns={columns} data={deliveryPersons || []} />)
       }
 
 
-      <WareHouseSheet />
+      <DeliveryPersonSheet />
     </>
   )
 }
 
-export default WareHousePage
+export default DeliveryPersonPage
