@@ -3,14 +3,14 @@
 
 import { Button } from '@/components/ui/button'
 import React from 'react'
-import { DataTable } from './DataTable'
-import { columns } from './columns'
 import { useQuery } from '@tanstack/react-query';
 import { getAllWarehouses } from '@/http/api';
 import { Warehouse } from '@/types';
 import { Loader2 } from 'lucide-react';
 import WareHouseSheet from './Warehouse-sheet';
 import { useNewWarehouseState } from '@/store/warehouse/warehouse-store';
+import { DataTable } from '../_components/DataTable';
+import { columns } from './columns';
 
 
 const WareHousePage = () => {

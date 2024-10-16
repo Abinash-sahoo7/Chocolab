@@ -3,7 +3,7 @@
 
 import { Button } from '@/components/ui/button'
 import React from 'react'
-import { DataTable } from './DataTable'
+import { DataTable } from '../_components/DataTable'
 import { columns } from './columns'
 import { useQuery } from '@tanstack/react-query';
 import { getAllDeliveryPersons, getAllWarehouses } from '@/http/api';
