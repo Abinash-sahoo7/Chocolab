@@ -16,7 +16,7 @@ import { inventorySchema } from '@/lib/validators/inventorySchema'
 
 export type InventoryFormvalues = z.input<typeof inventorySchema>;
 
-const CreateinventoryForm = ({ onSubmit, disabled }: { onSubmit: (formValues: InventoryFormvalues) => void, disabled: boolean }) => {
+const CreateinventoryForm = ({ onSubmit, disabled, errorMessage }: { onSubmit: (formValues: InventoryFormvalues) => void, disabled: boolean, errorMessage: string | undefined }) => {
 
     const queryClient = useQueryClient();
 
@@ -68,6 +68,13 @@ const CreateinventoryForm = ({ onSubmit, disabled }: { onSubmit: (formValues: In
                         </FormItem>
                     )}
                 />
+                {errorMessage && (
+                    <FormItem>
+                        <FormMessage className="text-red-700">
+                            {errorMessage}
+                        </FormMessage>
+                    </FormItem>
+                )}
                 <FormField
                     control={form.control}
                     name="warehouseId"

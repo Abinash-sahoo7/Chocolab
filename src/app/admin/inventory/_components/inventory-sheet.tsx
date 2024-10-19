@@ -1,5 +1,5 @@
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
-import React from 'react'
+import React, { useState } from 'react'
 import { QueryClient, useMutation } from '@tanstack/react-query'
 import { CreateInventory } from '@/http/api'
 import { toast } from '@/hooks/use-toast'
@@ -11,6 +11,7 @@ const InventorySheet = () => {
 
     const { isOpen, onClose } = useNewInventoryState();
     const queryClient = new QueryClient();
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
     const { mutate, isLoading } = useMutation({
         mutationKey: ['create-inventory'],
@@ -26,25 +27,15 @@ const InventorySheet = () => {
         onError: (error: any) => {
             console.log("Error in client: ", error);
             if (error.response.data.message?.code == '23505') {
-                toast({
-                    title: error.response.data.message?.message,
-                })
+                setErrorMessage(error.response.data.message?.message);
             } else {
-                toast({
-                    title: "something went wrong!",
-                })
+                setErrorMessage("Something went wrong!");
             }
         }
     })
 
     const onSubmit = (Values: InventoryFormvalues) => {
         console.log('values : ', Values);
-        // const formData = new FormData();
-        // formData.append("name", Values.name);
-        // formData.append("phone", Values.phone);
-        // formData.append("warehouseId", String(Values.warehouseId));
-
-        // console.log('formdata : ', formData);
 
         mutate(Values as InventoryFormvalues);
     }
@@ -59,7 +50,8 @@ const InventorySheet = () => {
                     </SheetDescription>
                 </SheetHeader>
 
-                <CreateinventoryForm onSubmit={onSubmit} disabled={isLoading} />
+
+                <CreateinventoryForm onSubmit={onSubmit} disabled={isLoading} errorMessage={errorMessage} />
             </SheetContent>
         </Sheet>
 
