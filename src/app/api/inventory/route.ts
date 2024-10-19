@@ -20,11 +20,13 @@ export async function POST(request: Request) {
 
   try {
     await db.insert(Inventories).values(validateData);
-  } catch (error) {
-    return Response.json(
-      { message: "Failed to create Inventory : ", error },
-      { status: 500 }
-    );
+  } catch (error: any) {
+    const errorMessage =
+      error.code === "23505"
+        ? { code: error.code, message: error.detail }
+        : error;
+    console.log("error : ", errorMessage);
+    return Response.json({ message: errorMessage }, { status: 500 });
   }
 
   return Response.json(
@@ -48,8 +50,8 @@ export async function GET() {
         created_at: Inventories.created_at,
       })
       .from(Inventories)
-      .leftJoin(Warehouses, eq(Inventories.id, Warehouses.id))
-      .leftJoin(products, eq(Inventories.id, products.id))
+      .leftJoin(Warehouses, eq(Inventories.warehouseId, Warehouses.id))
+      .leftJoin(products, eq(Inventories.productId, products.id))
       .orderBy(desc(Inventories.id));
 
     return Response.json(allInventories);

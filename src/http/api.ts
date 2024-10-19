@@ -1,5 +1,6 @@
 import { DeliveryPersonFormvalues } from "@/app/admin/delivery_persons/_components/create-deliveryPerson-form";
 import { api } from "./client";
+import { InventoryFormvalues } from "@/app/admin/inventory/_components/create-inventory-form";
 
 export const getAllProducts = async () => {
   const response = await api.get("/products");
@@ -34,5 +35,15 @@ export const getAllDeliveryPersons = async () => {
 
 export const CreateDeliveryPerson = async (data: DeliveryPersonFormvalues) => {
   const response = await api.post("/DeliveryPerson", data);
+  return response.data;
+};
+
+export const getAllInventories = async () => {
+  const response = await api.get("/inventory");
+  return response.data;
+};
+
+export const CreateInventory = async (data: InventoryFormvalues) => {
+  const response = await api.post("/inventory", data);
   return response.data;
 };

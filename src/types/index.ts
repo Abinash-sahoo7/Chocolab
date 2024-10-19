@@ -19,3 +19,14 @@ export interface DeliveryPerson {
   warehouseName: string;
   orderId: number;
 }
+
+export interface Inventory {
+  id: number;
+  sku: string;
+  orderId: number;
+  orderName: string;
+  warehouseId: number;
+  warehouseName: string;
+  productId: number;
+  productName: string;
+}
