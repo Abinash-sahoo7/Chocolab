@@ -1,6 +1,7 @@
 import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
 import React from 'react'
+import product4 from '../../../../public/chocolateWhiteDark-454384771-770x533-1_jpg.webp'
 
 const SpecialProduct = () => {
 
@@ -8,7 +9,7 @@ const SpecialProduct = () => {
         { src: "/product1.jpg", alt: "product1", name: "Cadbury Dairy Milk" },
         { src: "/product2.jpg", alt: "product2", name: "Mars Bars" },
         { src: "/product3.jpg", alt: "product3", name: "Lindt Excellence Bar" },
-        { src: "/product2.jpg", alt: "product2", name: "Mars Bars" },
+        { src: product4, alt: "product4", name: "Venu Bars" },
     ]
 
     return (
