@@ -4,6 +4,7 @@ import Hero from "./_components/Hero";
 import SpecialProduct from "./_components/SpecialProduct";
 import About from "./_components/About";
 import AdditionalCompo from "./_components/AdditionalCompo";
+import NewsLetter from "./_components/NewsLetter";
 
 
 const HomePage = () => {
@@ -14,6 +15,7 @@ const HomePage = () => {
       <SpecialProduct />
       <AdditionalCompo />
       <About />
+      <NewsLetter />
     </>
   );
 }
