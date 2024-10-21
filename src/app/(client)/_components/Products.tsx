@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
 import { getAllProducts } from '@/http/api'
 import { Product } from '@/types'
 import { useQuery } from '@tanstack/react-query'
@@ -10,6 +11,8 @@ import Link from 'next/link'
 import React from 'react'
 
 const Products = () => {
+
+    const skeleteon = Array.from({ length: 4 });
 
     const { data: products, isLoading } = useQuery({
         queryKey: ["products"],
@@ -26,33 +29,49 @@ const Products = () => {
                 </div>
 
                 <div className='mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-
                     {
-                        products?.map((product: Product) => {
-                            return <div key={product.id} className='flex flex-col items-start justify-center gap-5'>
-                                <Image
-                                    alt={product.name}
-                                    src={`/assets/${product.image}`}
-                                    height={0}
-                                    width={0}
-                                    sizes="100vw"
-                                    style={{ width: '100%' }}
-                                    className='aspect-square rounded-t-md object-cover shadow-lg hover:cursor-pointer'
-                                />
+                        isLoading ?
+                            <>
+                                {
+                                    skeleteon.map((_, i) => {
+                                        return <div key={i} className='flex h-full w-full flex-col gap-5'>
+                                            <Skeleton className='aspect-square w-full rounded-md bg-brown-100' />
+                                            <Skeleton className='h-5 w-full rounded-md bg-brown-100' />
+                                            <Skeleton className='h-5 w-10 rounded-md bg-brown-100' />
+                                            <Skeleton className='h-8 w-full rounded-md bg-brown-100' />
+                                        </div>
+                                    })
+                                }
+                            </> :
+                            <>
+                                {
+                                    products?.map((product: Product) => {
+                                        return <div key={product.id} className='flex flex-col items-start justify-center gap-5'>
+                                            <Image
+                                                alt={product.name}
+                                                src={`/assets/${product.image}`}
+                                                height={0}
+                                                width={0}
+                                                sizes="100vw"
+                                                style={{ width: '100%' }}
+                                                className='aspect-square rounded-t-md object-cover shadow-lg hover:cursor-pointer'
+                                            />
 
-                                <div className='w-full'>
-                                    <p className='text-lg font-semibold text-brown-700'>{[product.name]}</p>
-                                    <div className='mt-1 space-x-2'>
-                                        <span className='font-bold'>${product.price}</span>
-                                    </div>
-                                    <Link href={`/products/${product.id}`}>
-                                        <Button size={'sm'} className='mt-5 bg-brown-900 hover:bg-brown-800 active:bg-brown-700 px-8 w-full'>
-                                            Buy Now
-                                        </Button>
-                                    </Link>
-                                </div>
-                            </div>
-                        })
+                                            <div className='w-full'>
+                                                <p className='text-lg font-semibold text-brown-700'>{[product.name]}</p>
+                                                <div className='mt-1 space-x-2'>
+                                                    <span className='font-bold'>${product.price}</span>
+                                                </div>
+                                                <Link href={`/products/${product.id}`}>
+                                                    <Button size={'sm'} className='mt-5 bg-brown-900 hover:bg-brown-800 active:bg-brown-700 px-8 w-full'>
+                                                        Buy Now
+                                                    </Button>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    })
+                                }
+                            </>
                     }
                 </div>
             </div>
