@@ -6,6 +6,7 @@ import About from "./_components/About";
 import AdditionalCompo from "./_components/AdditionalCompo";
 import NewsLetter from "./_components/NewsLetter";
 import { Footer } from "./_components/Footer";
+import Products from "./_components/Products";
 
 
 const HomePage = () => {
@@ -16,6 +17,8 @@ const HomePage = () => {
       <SpecialProduct />
       <AdditionalCompo />
       <About />
+      {/* Products  */}
+      <Products />
       <NewsLetter />
       <Footer />
     </>
