@@ -5,6 +5,7 @@ import SpecialProduct from "./_components/SpecialProduct";
 import About from "./_components/About";
 import AdditionalCompo from "./_components/AdditionalCompo";
 import NewsLetter from "./_components/NewsLetter";
+import { Footer } from "./_components/Footer";
 
 
 const HomePage = () => {
@@ -16,6 +17,7 @@ const HomePage = () => {
       <AdditionalCompo />
       <About />
       <NewsLetter />
+      <Footer />
     </>
   );
 }
