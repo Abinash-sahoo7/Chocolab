@@ -62,7 +62,7 @@ const Products = () => {
                                                 <div className='mt-1 space-x-2'>
                                                     <span className='font-bold'>${product.price}</span>
                                                 </div>
-                                                <Link href={`/products/${product.id}`}>
+                                                <Link href={`/product/${product.id}`}>
                                                     <Button size={'sm'} className='mt-5 bg-brown-900 hover:bg-brown-800 active:bg-brown-700 px-8 w-full'>
                                                         Buy Now
                                                     </Button>

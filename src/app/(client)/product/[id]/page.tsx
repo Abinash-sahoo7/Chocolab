@@ -1,0 +1,96 @@
+"use client"
+
+import { getSingleProduct } from '@/http/api';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation'
+import React from 'react'
+import Header from '../../_components/Header';
+import Image from 'next/image';
+import { Product } from '@/types';
+import { Star } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
+
+const SingleProduct = () => {
+
+    const params = useParams();
+    const id = params.id;
+
+    const { data: product, isLoading } = useQuery<Product>({
+        queryKey: ["product", id],
+        queryFn: () => getSingleProduct(id as string)
+    })
+
+    return (
+        <>
+            <Header />
+            <section className='relative custom-height bg-[#f5f5f5]'>
+                <div className='max-w-6xl mx-auto z-50 gap-x-10 px-5 py-14 flex h-full md:py-20'>
+                    <div>
+                        {
+                            isLoading ?
+                                (<Skeleton className='aspect-square w-[28rem] rounded-md bg-brown-100' />)
+                                :
+                                (<Image
+                                    src={`/assets/${product?.image}`}
+                                    alt={product?.name ?? 'image'}
+                                    width={0}
+                                    height={0}
+                                    sizes="100vw"
+                                    className='aspect-square w-[28rem] rounded-md object-cover shadow-2xl'
+                                />)
+                        }
+                    </div>
+
+                    <div className='flex flex-col flex-1 space-y-2'>
+                        {
+                            isLoading ?
+                                (<>
+                                    <Skeleton className='h-4 w-24 rounded-md bg-brown-100' />
+                                    <Skeleton className='h-10 w-2/3 rounded-md bg-brown-100' />
+                                    <div className='flex items-center gap-x-3'>
+                                        <div className='flex gap-x-0.5'>
+                                            <Star className='size-4 text-yellow-400' fill='#facc15' />
+                                            <Star className='size-4 text-yellow-400' fill='#facc15' />
+                                            <Star className='size-4 text-yellow-400' fill='#facc15' />
+                                            <Star className='size-4 text-yellow-400' fill='#facc15' />
+                                            <Star className='size-4 text-yellow-400' />
+                                        </div>
+                                        <span className='text-sm'>144 Reviews</span>
+                                    </div>
+                                    <Skeleton className='h-24 w-full rounded-md bg-brown-100' />
+
+                                    <Separator className='my-6 bg-brown-900' />
+                                    <div className='flex items-center justify-between'>
+                                        <Skeleton className="h-10 w-28 bg-brown-100" />
+                                        <Skeleton className="h-10 w-60 bg-brown-100" />
+                                    </div>
+                                </>)
+                                :
+                                (<>
+                                    <h2 className='text-brown-500 text-sm tracking-widest'>Brand Name</h2>
+                                    <h2 className='text-4xl text-brown-900 font-semibold'>
+                                        {product?.name}
+                                    </h2>
+                                    <div className='flex items-center gap-x-3'>
+                                        <div className='flex gap-x-0.5'>
+                                            <Star className='size-4 text-yellow-400' fill='#facc15' />
+                                            <Star className='size-4 text-yellow-400' fill='#facc15' />
+                                            <Star className='size-4 text-yellow-400' fill='#facc15' />
+                                            <Star className='size-4 text-yellow-400' fill='#facc15' />
+                                            <Star className='size-4 text-yellow-400' />
+                                        </div>
+                                        <span className='text-sm'>144 Reviews</span>
+                                    </div>
+
+                                    <p className='mt-1'>{product?.description}</p>
+                                </>)
+                        }
+                    </div>
+                </div>
+            </section>
+        </>
+    )
+}
+
+export default SingleProduct

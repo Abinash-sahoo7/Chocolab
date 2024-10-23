@@ -4,7 +4,7 @@ import { InventoryFormvalues } from "@/app/admin/inventory/_components/create-in
 
 export const getAllProducts = async () => {
   const response = await api.get("/products");
-  return response.data;
+  return await response.data;
 };
 
 export const CreateProduct = async (data: FormData) => {
@@ -18,7 +18,7 @@ export const CreateProduct = async (data: FormData) => {
 
 export const getAllWarehouses = async () => {
   const response = await api.get("/warehouses");
-  return response.data;
+  return await response.data;
 };
 
 export const CreateWarehouse = async (data: FormData) => {
@@ -30,7 +30,7 @@ export const CreateWarehouse = async (data: FormData) => {
 
 export const getAllDeliveryPersons = async () => {
   const response = await api.get("/DeliveryPerson");
-  return response.data;
+  return await response.data;
 };
 
 export const CreateDeliveryPerson = async (data: DeliveryPersonFormvalues) => {
@@ -40,10 +40,15 @@ export const CreateDeliveryPerson = async (data: DeliveryPersonFormvalues) => {
 
 export const getAllInventories = async () => {
   const response = await api.get("/inventory");
-  return response.data;
+  return await response.data;
 };
 
 export const CreateInventory = async (data: InventoryFormvalues) => {
   const response = await api.post("/inventory", data);
   return response.data;
+};
+
+export const getSingleProduct = async (id: string) => {
+  const response = await api.get(`/products/${id}`);
+  return await response.data;
 };
