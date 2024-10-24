@@ -53,6 +53,15 @@ const SingleProduct = () => {
         console.log({ values });
     }
 
+    const qty = form.watch('qty');
+
+    const price = React.useMemo(() => {
+        if (product?.price) {
+            return qty * product.price;
+        }
+        return 0;
+    }, [qty, product]);
+
     return (
         <>
             <Header />
@@ -162,7 +171,7 @@ const SingleProduct = () => {
                                             </div>
                                             <Separator className='bg-brown-800 my-6' />
                                             <div className='flex items-center justify-between'>
-                                                <span className='text-3xl font-semibold text-brown-700'>$60</span>
+                                                <span className='text-3xl font-semibold text-brown-700'>${price}</span>
                                                 {
                                                     session ?
                                                         (<Button type='submit'>Buy Now</Button>)
