@@ -16,7 +16,8 @@ const Products = () => {
 
     const { data: products, isLoading } = useQuery({
         queryKey: ["products"],
-        queryFn: getAllProducts
+        queryFn: getAllProducts,
+        staleTime: 10 * 1000,
     })
 
     return (
