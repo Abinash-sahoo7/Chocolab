@@ -8,6 +8,7 @@ import { authOptions } from "@/lib/auth/authOptions";
 import AuthProvider from "@/provider/auth-provider";
 
 
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -37,6 +38,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <meta name="cryptomus" content="878ab07b" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

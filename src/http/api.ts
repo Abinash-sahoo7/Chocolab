@@ -1,6 +1,7 @@
 import { DeliveryPersonFormvalues } from "@/app/admin/delivery_persons/_components/create-deliveryPerson-form";
 import { api } from "./client";
 import { InventoryFormvalues } from "@/app/admin/inventory/_components/create-inventory-form";
+import { OrderFormValues } from "@/app/(client)/product/[id]/page";
 
 export const getAllProducts = async () => {
   const response = await api.get("/products");
@@ -13,7 +14,7 @@ export const CreateProduct = async (data: FormData) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  return response.data;
+  return await response.data;
 };
 
 export const getAllWarehouses = async () => {
@@ -25,7 +26,7 @@ export const CreateWarehouse = async (data: FormData) => {
   console.log("Data : ", data);
 
   const response = await api.post("/warehouses", data);
-  return response.data;
+  return await response.data;
 };
 
 export const getAllDeliveryPersons = async () => {
@@ -35,7 +36,7 @@ export const getAllDeliveryPersons = async () => {
 
 export const CreateDeliveryPerson = async (data: DeliveryPersonFormvalues) => {
   const response = await api.post("/DeliveryPerson", data);
-  return response.data;
+  return await response.data;
 };
 
 export const getAllInventories = async () => {
@@ -45,10 +46,15 @@ export const getAllInventories = async () => {
 
 export const CreateInventory = async (data: InventoryFormvalues) => {
   const response = await api.post("/inventory", data);
-  return response.data;
+  return await response.data;
 };
 
 export const getSingleProduct = async (id: string) => {
   const response = await api.get(`/products/${id}`);
+  return await response.data;
+};
+
+export const PlaceOrder = async (data: OrderFormValues) => {
+  const response = await api.post("/orders", data);
   return await response.data;
 };

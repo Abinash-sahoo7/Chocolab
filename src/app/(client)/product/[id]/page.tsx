@@ -1,7 +1,7 @@
 "use client"
 
-import { getSingleProduct } from '@/http/api';
-import { useQuery } from '@tanstack/react-query';
+import { getSingleProduct, PlaceOrder } from '@/http/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useParams, usePathname } from 'next/navigation'
 import React from 'react'
 import Header from '../../_components/Header';
@@ -20,6 +20,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { AxiosError } from 'axios';
+import { toast } from '@/hooks/use-toast'
+export type OrderFormValues = z.infer<typeof orderSchema>;
+type CustomError = {
+    message: string;
+}
 
 const SingleProduct = () => {
 
@@ -46,12 +52,36 @@ const SingleProduct = () => {
         queryFn: () => getSingleProduct(id as string)
     })
 
-    type FormValues = z.infer<typeof orderSchema>;
+    const { mutate } = useMutation({
+        mutationKey: ["Order"],
+        mutationFn: (data: OrderFormValues) => PlaceOrder({ ...data, productId: Number(id) }),
+        onSuccess: (data) => {
+            if (data.url) {
+                // Redirect to Stripe Checkout
+                window.location.href = data.url;
+            }
+        },
+        onError: (err: AxiosError) => {
+            if (err.response?.data) {
+                const customError = err.response?.data as CustomError;
+                console.log('error: ', customError.message);
+                toast({
+                    title: customError.message,
+                    color: "red",
+                })
+            } else {
+                toast({
+                    title: "Something went wrong",
+                    color: "red",
+                })
+            }
+        }
+    })
 
-    const onSubmit = (values: FormValues) => {
-        // Submit the form here
-        console.log({ values });
-    }
+    const onSubmit = async (values: OrderFormValues) => {
+        console.log('values: ', values);
+        mutate(values);
+    };
 
     const qty = form.watch('qty');
 
@@ -149,7 +179,9 @@ const SingleProduct = () => {
                                                         <FormItem>
                                                             <FormLabel>Pincode</FormLabel>
                                                             <FormControl>
-                                                                <Input type='number' className='h-9 border-brown-200 bg-white placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brown-400 focus-visible:ring-offset-0' placeholder='eg: 752019' {...field} />
+                                                                <Input type='number'
+                                                                    className='h-9 border-brown-200 bg-white placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brown-400 focus-visible:ring-offset-0' placeholder='eg: 752019'
+                                                                    {...field} />
                                                             </FormControl>
                                                             <FormMessage className='text-xs' />
                                                         </FormItem>
@@ -162,9 +194,14 @@ const SingleProduct = () => {
                                                         <FormItem>
                                                             <FormLabel>Quantity</FormLabel>
                                                             <FormControl>
-                                                                <Input type='number' className='h-9 border-brown-200 bg-white placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brown-400 focus-visible:ring-offset-0' {...field} />
+                                                                <Input
+                                                                    type='number'
+                                                                    {...field}
+                                                                    onChange={(e) => field.onChange(parseInt(e.target.value))}
+                                                                    className='h-9 border-brown-200 bg-white placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brown-400 focus-visible:ring-offset-0'
+                                                                />
                                                             </FormControl>
-                                                            <FormMessage className='text-xs' />
+                                                            <FormMessage />
                                                         </FormItem>
                                                     )}
                                                 />
