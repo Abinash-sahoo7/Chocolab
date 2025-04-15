@@ -8,7 +8,7 @@ import {
   Warehouses,
 } from "@/lib/db/schema";
 import { orderSchema } from "@/lib/validators/orderSchema";
-import { and, eq, inArray, isNull } from "drizzle-orm";
+import { and, eq, inArray, isNull, sql } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 
 export async function POST(request: Request) {
@@ -181,7 +181,6 @@ export async function POST(request: Request) {
           orderId: finalOrder.id,
         },
       },
-      webhook_url: `${process.env.APP_BASE_URL}/api/payment/callback`,
     });
 
     // Return the session URL to redirect the user
@@ -202,13 +201,13 @@ export async function POST(request: Request) {
           // Delete from delivery persons table
           await tx
             .update(DeliveryPersons)
-            .set({ orderId: null })
+            .set({ orderId: sql`NULL` })
             .where(eq(DeliveryPersons.orderId, finalOrder.id));
 
           // Delete from inventories table
           await tx
             .update(Inventories)
-            .set({ orderId: null })
+            .set({ orderId: sql`NULL` })
             .where(eq(Inventories.orderId, finalOrder.id));
 
           // Delete from orders table
