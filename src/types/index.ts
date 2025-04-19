@@ -31,3 +31,20 @@ export interface Inventory {
   productId: number;
   productName: string;
 }
+
+export interface Order {
+  id: number;
+  userId: number;
+  userName: string;
+  productId: number;
+  productName: string;
+  status: string;
+  type: string;
+  price: number;
+  address: string;
+  qty: number;
+  // name: string;
+  // image: string;
+  // price: number;
+  // description: string;
+}

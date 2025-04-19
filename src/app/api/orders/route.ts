@@ -5,11 +5,14 @@ import {
   Inventories,
   orders,
   products,
+  users,
   Warehouses,
 } from "@/lib/db/schema";
+import { ErrorLogWithFolderName } from "@/lib/errorLogger";
 import { orderSchema } from "@/lib/validators/orderSchema";
-import { and, eq, inArray, isNull, sql } from "drizzle-orm";
+import { and, eq, inArray, isNull, sql, desc } from "drizzle-orm";
 import { getServerSession } from "next-auth";
+import { ErrorFolderName } from "@/enums/index";
 
 export async function POST(request: Request) {
   // get Session
@@ -220,6 +223,47 @@ export async function POST(request: Request) {
 
     return Response.json(
       { message: "Error creating payment session" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    ErrorLogWithFolderName(
+      ErrorFolderName.Order,
+      "----------------------Start the get Api call for Order ------------------------"
+    );
+    const allOrders = await db
+      .select({
+        id: orders.id,
+        productId: orders.productId,
+        userId: orders.userId,
+        quantity: orders.qty,
+        totalPrice: orders.price,
+        status: orders.status,
+        address: orders.address,
+        created_at: orders.created_at,
+        updated_at: orders.updated_at,
+        productName: products.name,
+        userName: sql`${users.fname} || ' ' || ${users.lname}`,
+      })
+      .from(orders)
+      .leftJoin(products, eq(orders.productId, products.id))
+      .leftJoin(users, eq(orders.userId, users.id))
+      .orderBy(desc(orders.id));
+    ErrorLogWithFolderName(
+      ErrorFolderName.Order,
+      "Total order count : " + allOrders.length
+    );
+    ErrorLogWithFolderName(
+      ErrorFolderName.Order,
+      "----------------------Finish the get Api call for Order ------------------------"
+    );
+    return Response.json(allOrders);
+  } catch (error) {
+    return Response.json(
+      { message: "Failed to fetch all Orders" },
       { status: 500 }
     );
   }
