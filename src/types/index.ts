@@ -48,3 +48,8 @@ export interface Order {
   // price: number;
   // description: string;
 }
+
+export interface orderStatusValue {
+  orderId: number;
+  status: string;
+}

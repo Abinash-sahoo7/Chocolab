@@ -2,6 +2,7 @@ import { DeliveryPersonFormvalues } from "@/app/admin/delivery_persons/_componen
 import { api } from "./client";
 import { InventoryFormvalues } from "@/app/admin/inventory/_components/create-inventory-form";
 import { OrderFormValues } from "@/app/(client)/product/[id]/page";
+import { orderStatusValue } from "@/types";
 
 export const getAllProducts = async () => {
   const response = await api.get("/products");
@@ -61,5 +62,10 @@ export const PlaceOrder = async (data: OrderFormValues) => {
 
 export const getAllOrders = async () => {
   const response = await api.get("/orders");
+  return await response.data;
+};
+
+export const ChangeOrderStatus = async (data: orderStatusValue) => {
+  const response = await api.patch("/orders/status", data);
   return await response.data;
 };
