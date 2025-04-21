@@ -247,6 +247,7 @@ export async function GET() {
         updated_at: orders.updated_at,
         productName: products.name,
         userName: sql`${users.fname} || ' ' || ${users.lname}`,
+        type: orders.type,
       })
       .from(orders)
       .leftJoin(products, eq(orders.productId, products.id))
