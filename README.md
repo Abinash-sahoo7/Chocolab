@@ -19,7 +19,7 @@ Full Stack Developer at Concept Infoway PVT LTD
 ## Tech Stack
 
 - **Frontend**: Next.js, React, Tailwind CSS
-- **Backend**: Node.js, Express
+- **Backend**: Next.js
 - **Database**: PostgreSQL with Drizzle ORM
 - **Authentication**: NextAuth.js
 - **Payment**: Stripe
