@@ -1,4 +1,5 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from '@/hooks/use-toast';
 import { ChangeOrderStatus } from '@/http/api';
 import { orderStatusValue } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -12,7 +13,16 @@ const StatusChanger = ({ orderId, currentStatus }: { orderId: number; currentSta
         mutationKey: ['order-status'],
         mutationFn: (data: orderStatusValue) => ChangeOrderStatus(data),
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ["AllOrders"] })
+            queryClient.invalidateQueries({ queryKey: ["AllOrders"] });
+            toast({
+                title: "Order Status change Successfully",
+            })
+        },
+        onError: (err) => {
+            console.log('Error occure while changing status : ', err);
+            toast({
+                title: "Something went wrong! ",
+            })
         }
     })
 
