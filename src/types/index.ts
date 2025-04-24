@@ -53,3 +53,20 @@ export interface orderStatusValue {
   orderId: number;
   status: string;
 }
+
+export interface myOrder {
+  id: number;
+  userId: number;
+  userName: string;
+  productId: number;
+  productName: string;
+  status: string;
+  type: string;
+  price: number;
+  address: string;
+  qty: number;
+  created_at: Date;
+  updated_at: Date;
+  image: string;
+  productDescription: string;
+}
