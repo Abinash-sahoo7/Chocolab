@@ -16,11 +16,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import SideBar, { navitems } from "./_components/Sidebar"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth/authOptions"
+import LogoutBtn from "./_components/LogoutBtn"
 
 export const description =
     "A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action."
 
-const DashboardLayout = ({ children, }: { children: React.ReactNode }) => {
+const DashboardLayout = async ({ children, }: { children: React.ReactNode }) => {
+
+    const serverSession = await getServerSession(authOptions)
+
     return (
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
             <SideBar />
@@ -70,7 +76,9 @@ const DashboardLayout = ({ children, }: { children: React.ReactNode }) => {
                             <DropdownMenuItem>Settings</DropdownMenuItem>
                             <DropdownMenuItem>Support</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
+                            {
+                                serverSession && (<DropdownMenuItem><LogoutBtn>Logout</LogoutBtn></DropdownMenuItem>)
+                            }
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </header>
