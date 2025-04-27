@@ -31,7 +31,7 @@ const MyOrderPage = () => {
                     <p className='mb-5'>Check the status of recent orders.</p>
                     <div className='space-y-5'>
                         {isLoading && <Loader2 className='size-10 animate-spin' />}
-                        {isError && <span className='text-red-500'>Something Went wrong </span>}
+                        {isError && <span className=''>Something Went wrong </span>}
                         {
                             myOrders && myOrders.length > 0 ? (
                                 myOrders?.slice(0, 7).map((item) => (
@@ -83,8 +83,16 @@ const MyOrderPage = () => {
                                 ))
                             ) : (
                                 <div className='flex flex-col justify-center items-center h-full gap-2'>
-                                    <ShoppingBag className="h-32 w-32 text-gray-400" />
-                                    <span className='text-gray-500 text-2xl font-semibold'>No orders found</span>
+                                    {
+                                        isLoading ? (
+                                            <Loader2 className="h-10 w-10 animate-spin text-gray-400" />
+                                        ) : (
+                                            <>
+                                                <ShoppingBag className="h-32 w-32 text-gray-400" />
+                                                <span className='text-gray-500 text-2xl font-semibold'>No orders found</span>
+                                            </>
+                                        )
+                                    }
                                 </div>
                             )
                         }

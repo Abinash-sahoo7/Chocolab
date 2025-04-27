@@ -4,10 +4,14 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'
+import { signOut, useSession } from 'next-auth/react';
 
 const Header = () => {
 
     const pathname = usePathname();
+    const session = useSession();
+    // console.log('session', session);
+
     const navItems = [
         { label: 'Home', href: '/' },
         { label: 'Best Selling', href: '/best-selling' },
@@ -30,6 +34,15 @@ const Header = () => {
                             <Link href={item.href}>{item.label}</Link>
                         </li>
                     ))}
+                    <li className='text-brown-300 underline-offset-4 transition-all hover:cursor-pointer hover:text-brown-900 hover:underline'>
+                        {
+                            session.status === 'unauthenticated' ? (
+                                <Link href='api/auth/signin'>sign in</Link>
+                            ) : (
+                                <button onClick={() => signOut()}>Log out</button>
+                            )
+                        }
+                    </li>
                 </ul>
             </nav>
         </header>
