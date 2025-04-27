@@ -24,3 +24,16 @@ export function formatDate(isoString: string): string {
 
   return formattedDate;
 }
+
+export const getStatusColor = (status: string) => {
+  switch (status.toLowerCase()) {
+    case "received":
+      return "bg-purple-600";
+    case "reserved":
+      return "bg-amber-600";
+    case "paid":
+      return "bg-green-600";
+    case "completed":
+      return "bg-gray-600";
+  }
+};
